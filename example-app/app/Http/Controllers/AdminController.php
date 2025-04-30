@@ -19,7 +19,8 @@ class AdminController extends Controller
         return view('AdminViews.Team.AddTeamMember' , compact('teams'));
     }
 
-    public function InsertTeamMember(Request $request)
+
+public function InsertTeamMember(Request $request)
 {
     $request->validate([
         'name' => 'required',
@@ -29,20 +30,26 @@ class AdminController extends Controller
         'description' => 'nullable|string',
     ]);
 
+    // فقط نام فایل رو از URL جدا کن
+    $imageName = basename($request->image);
+
     Team::create([
         'name' => $request->name,
         'position' => $request->position,
         'specialty' => $request->specialty,
-        'image' => $request->image, // مسیر عکس
-        'description' => $request->description, // متن با HTML
+        'image' => $imageName, // ذخیره فقط نام فایل
+        'description' => $request->description,
     ]);
 
-    return redirect()->route('teams.index')->with('success', 'عضو تیم با موفقیت اضافه شد.');
+    return redirect()->route('AddTeamMember')->with('success', 'عضو تیم با موفقیت اضافه شد.');
 }
 
-//   public function InsertTeamMember()
-//   {
-//     return view("AdminViews.Team.")
-//   }
+public function DeleteTeamMember($id)
+{
+    $team = Team::findOrFail($id);
+    $team->delete();
+
+    return redirect()->route('AddTeamMember')->with('success', 'پست حذف شد.');
+}
 
 }

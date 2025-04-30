@@ -40,7 +40,7 @@
 
     <div class="card mb-5 shadow-sm">
         <div class="card-body">
-            <form action="{{ route('InsertTeamMember') }}" method="POST">
+            <form action="{{ route('InsertTeamMember') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -100,45 +100,69 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($teams as $key => $team)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td>{{ $team->name }}</td>
-                        <td>{{ $team->position }}</td>
-                        <td>{{ $team->specialty }}</td>
-                        <td><img src="{{ $team->image }}" alt="{{ $team->name }}" height="60"></td>
-                        <td>{!! Str::limit(strip_tags($team->description), 50) !!}</td>
-                        <td>
-                            <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-sm btn-warning">ویرایش</a>
-                            <form action="{{ route('teams.destroy', $team->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button onclick="return confirm('آیا مطمئنید؟')" class="btn btn-sm btn-danger">حذف</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="7">هیچ عضوی ثبت نشده است.</td>
-                    </tr>
-                @endforelse
+                @foreach($teams as $key => $team)
+                <tr>
+                    <td>{{ $key + 1 }}</td>
+                    <td>{{ $team->name }}</td>
+                    <td>{{ $team->position }}</td>
+                    <td>{{ $team->specialty }}</td>
+                    <td>
+                        <img src="{{ asset('storage/photos/1/' . $team->image) }}" alt="{{ $team->name }}" height="60">
+                    </td>
+                    <td>{!! Str::limit($team->description, 100) !!}</td>
+
+                     <td><a href="{{ route('DeleteTeamMember' , ['id' => $team->id]) }}">حذف</a></td>
+                    
+                </tr>
+                
+                
+              @endforeach
             </tbody>
         </table>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
-        // اتصال File Manager به دکمه انتخاب تصویر
+        // Connect Laravel File Manager to image button
         $('#lfm').filemanager('image');
 
-        // فعال سازی کامل CKEditor
+        // Initialize CKEditor
         CKEDITOR.replace('editor', {
             filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-            filebrowserBrowseUrl: '/laravel-filemanager?type=Files'
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+
+            // Remove unnecessary dialog tabs
+            removeDialogTabs: 'image:advanced;link:advanced',
+
+            // ✅ Allow only the following tags: <p>, <br>, <strong>, <em>, <u>, <img>
+            allowedContent: 'p br strong em u; img[!src,alt,width,height,style];',
+
+            // ❌ Disallow tables and related tags like <td>, <th>
+            disallowedContent: 'table thead tbody tfoot tr th td',
+
+            // ✅ Prevent base64 image pasting from clipboard
+            on: {
+                instanceReady: function (ev) {
+                    ev.editor.dataProcessor.htmlFilter.addRules({
+                        elements: {
+                            img: function (el) {
+                                var src = el.attributes.src;
+                                if (src && src.indexOf('data:image') === 0) {
+                                    alert("افزودن مستقیم تصاویر از کلیپ‌بورد پشتیبانی نمی‌شود. لطفاً از دکمه انتخاب تصویر استفاده کنید.");
+                                    return false;
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        // ✅ Force <img> tags to self-close properly
+        CKEDITOR.on('instanceReady', function (ev) {
+            ev.editor.dataProcessor.writer.selfClosingEnd = '>';
         });
     });
 </script>
-
 </body>
 </html>
