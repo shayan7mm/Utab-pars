@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.AdminLayouts.main')  <!-- این خط برای استفاده از layout کلی است -->
+<title>شرکت دیجیتال مارکتینگ یوتاب پارس</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+@section('content')
+
+        <!--  BEGIN CONTENT AREA  -->
     <h1>
-        hello from admin
+        hello world
     </h1>
-</body>
-</html>
+ @endsection
+               
+  
