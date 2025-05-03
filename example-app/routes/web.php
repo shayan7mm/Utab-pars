@@ -16,6 +16,8 @@ Route::get('/', [HomeController::class,'user'])->name('user');
 
 Route::get('/logout', [HomeController::class,'logout'])->name('logout');
 
+Route::post('/ContactToUs', [HomeController::class,'ContactToUs'])->name('ContactToUs');
+
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
@@ -31,6 +33,10 @@ Route::middleware(['auth', AdminMiddleware::class . ':admin'])
     Route::get('/admin/AddTeamMember', [AdminController::class,'AddTeamMember'])->name('AddTeamMember');
     Route::post('/admin/AddTeamMember/InsertTeamMember', [AdminController::class,'InsertTeamMember'])->name('InsertTeamMember');
     Route::get('/admin/DeleteTeamMember/{id}', [AdminController::class,'DeleteTeamMember'])->name('DeleteTeamMember');
+
+    Route::get('/admin/AllMessages', [AdminController::class,'AllMessages'])->name('AllMessages');
+
+    Route::get('/admin/test', [AdminController::class,'test'])->name('test');
 
 
 });

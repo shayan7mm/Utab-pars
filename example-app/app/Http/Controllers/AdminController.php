@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactToUs;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -50,6 +51,60 @@ public function DeleteTeamMember($id)
     $team->delete();
 
     return redirect()->route('AddTeamMember')->with('success', 'پست حذف شد.');
+}
+
+public function AllMessages()
+{
+    $message = contactToUs::all();
+    return view('AdminViews.Message.Message' , compact('message'));
+}
+
+public function contactToUs(Request $request)
+{
+    {   $request -> validate([
+        'name' => 'required|string|min:3',
+        'number'=>'required',
+        'email' => 'required|email',
+        'message'=>'required',
+    ]);
+    
+   
+        $request->input('name');
+        $request->input('email');
+        $request->input('number');
+        $request->input('message');
+       
+        $ContacToUs =new ContactToUs();
+        
+        $ContacToUs->name = $request->name;
+        $ContacToUs->email = $request->email;
+        $ContacToUs->number = $request->number;
+        $ContacToUs->message = $request->message;
+        
+        $ContacToUs->save();
+        return redirect()->route('user')->with('success' , 'پیام شما با موفقیت ارسال شد');
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public function test()
+{
+    return view('AdminViews.Team.test');
 }
 
 }
