@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('featured_image');
             $table->string('alt');
+            $table->timestamps();
         });
     }
 

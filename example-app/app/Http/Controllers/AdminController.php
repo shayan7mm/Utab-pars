@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactToUs;
+use App\Models\Service;
 use App\Models\Team;
 use Illuminate\Http\Request;
 
@@ -59,32 +60,49 @@ public function AllMessages()
     return view('AdminViews.Message.Message' , compact('message'));
 }
 
-public function contactToUs(Request $request)
-{
-    {   $request -> validate([
-        'name' => 'required|string|min:3',
-        'number'=>'required',
-        'email' => 'required|email',
-        'message'=>'required',
-    ]);
-    
-   
-        $request->input('name');
-        $request->input('email');
-        $request->input('number');
-        $request->input('message');
-       
-        $ContacToUs =new ContactToUs();
-        
-        $ContacToUs->name = $request->name;
-        $ContacToUs->email = $request->email;
-        $ContacToUs->number = $request->number;
-        $ContacToUs->message = $request->message;
-        
-        $ContacToUs->save();
-        return redirect()->route('user')->with('success' , 'پیام شما با موفقیت ارسال شد');
+    public function AllServices()
+    {
+        $services = Service::all();
+        return view('AdminViews.Services.Services' , compact('services'));
     }
-}
+
+    public function InsertService(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'alt' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+    
+        $service = new Service();
+        $service->name = $request->name;
+        $service->alt = $request->alt;
+        $service->description = $request->description;
+        if($request->featured_image)
+        {
+            $img = 'img/services'.$service->featured_image;
+            
+        $path = time() .'-'. $request->featured_image->getClientOriginalName();
+        $request->featured_image->move(public_path('img/services'), $path);
+        $service->featured_image = $path;
+        }
+    
+
+        $service->save();
+    
+        return redirect()->back()->with('success', 'خدمت با موفقیت ذخیره شد.');
+    }
+
+    public function DeleteService($id)
+    {
+        $service = Service::findOrFail($id);
+        $service->delete();
+
+        return redirect()->route('AllServices')->with('success', 'خدمات حذف شد.');
+    }
+    
+
 
 
 

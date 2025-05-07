@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('AdminPannel/SecondTheme/assets/img/favicon.ico') }}" />
     <link href="{{ asset('AdminPannel/SecondTheme/assets/css/loader.css') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('AdminPannel/SecondTheme/assets/js/loader.js') }}"></script>
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
 
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
