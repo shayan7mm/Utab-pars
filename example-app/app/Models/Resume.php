@@ -13,4 +13,5 @@ class Resume extends Model
     {
         return $this->hasMany(ResumeImage::class);
     }
+    
 }

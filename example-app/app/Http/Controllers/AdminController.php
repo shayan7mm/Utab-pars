@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactToUs;
 use App\Models\PricingPlans;
+use App\Models\Resume;
 use App\Models\Service;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -171,6 +172,12 @@ public function DeletePricingPlan($id)
     $plan->delete();
 
     return redirect()->back()->with('success', 'پلن با موفقیت حذف شد.');
+}
+
+public function projects()
+{
+    $resumes = Resume::all();
+    return view('AdminViews.Projects.Projects' , compact('resumes'));
 }
 
     

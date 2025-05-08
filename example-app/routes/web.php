@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResumeController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Models\BlogPost;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,19 @@ Route::middleware(['auth', AdminMiddleware::class . ':admin'])
     Route::get('/admin/PricingPlan/EditPricingPlan/{id}', [AdminController::class, 'EditPricingPlan'])->name('EditPricingPlan');
     Route::post('/admin/PricingPlan/UpdatePricingPlan', [AdminController::class, 'UpdatePricingPlan'])->name('UpdatePricingPlan');
     Route::delete('/admin/PricingPlan/Delete/{id}', [AdminController::class, 'DeletePricingPlan'])->name('DeletePricingPlan');
+
+    Route::get('/admin/Projects', [AdminController::class,'Projects'])->name('Projects');
+    Route::post('/admin/resumes', [ResumeController::class, 'store'])->name('resumes.store');
+    Route::get('/admin/resumes/{id}/edit', [ResumeController::class, 'edit'])->name('resumes.edit');
+    Route::put('/admin/resumes/{id}', [ResumeController::class, 'update'])->name('resumes.update');
+    Route::delete('/admin/resumes/{id}', [ResumeController::class, 'destroy'])->name('resumes.destroy');
+
+    Route::post('/admin/resumes/{id}/gallery', [ResumeController::class, 'addGalleryImage'])->name('resumes.addGalleryImage'); // برای افزودن تصاویر آلبوم
+Route::delete('/admin/resumes/gallery/{imageId}', [ResumeController::class, 'deleteGalleryImage'])->name('resumes.deleteGalleryImage'); // برای حذف تصاویر آلبوم
+// در فایل web.php
+
+Route::get('/admin/resumes/{id}/gallery', [ResumeController::class, 'gallery'])->name('resumes.gallery');
+
 
 
 
