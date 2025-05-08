@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactToUs;
+use App\Models\PricingPlans;
 use App\Models\Service;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -101,6 +102,77 @@ public function AllMessages()
 
         return redirect()->route('AllServices')->with('success', 'خدمات حذف شد.');
     }
+
+    public function PricingPlan()
+    {
+        $plans = PricingPlans::all();
+        return view('AdminViews.PricingPlan.PricingPlan' , compact('plans'));
+    }
+
+    public function InsertBusinessPlan(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'price' => 'required',
+            'features' => 'required|string',
+        ]);
+    
+        // تبدیل ویژگی‌ها به آرایه
+        $featuresArray = array_filter(array_map('trim', explode("\n", $request->features)));
+    
+        PricingPlans::create([
+            'title' => $request->title,
+            'price' => $request->price,
+            'features' => json_encode($featuresArray),
+            'is_featured' => $request->has('is_featured'),
+        ]);
+    
+        return redirect()->back()->with('success', 'پلن با موفقیت اضافه شد.');
+    }
+
+    public function EditPricingPlan($id)
+    {
+        $plans = PricingPlans::findOrFail($id);
+        return view('AdminViews.PricingPlan.EditPricingPlan', compact('plans'));
+    }
+
+    public function UpdatePricingPlan(Request $request)
+{
+    // اعتبارسنجی ورودی‌ها
+    $request->validate([
+        'title' => 'required',
+        'price' => 'required',
+        'features' => 'required|string',
+    ]);
+
+    // پیدا کردن پلن مورد نظر بر اساس ID
+    $plan = PricingPlans::findOrFail($request->id);
+    
+
+    // تبدیل ویژگی‌ها به آرایه
+    $featuresArray = array_filter(array_map('trim', explode("\n", $request->features)));
+
+    // بروزرسانی داده‌های پلن
+    $plan->title = $request->title;
+    $plan->price = $request->price;
+    $plan->features = json_encode($featuresArray);
+    $plan->is_featured = $request->has('is_featured');
+
+    // ذخیره تغییرات در پایگاه داده
+    $plan->save();
+
+    // بازگشت به صفحه قبلی همراه با پیام موفقیت
+    return redirect()->route('PricingPlan')->with('success', 'پلن با موفقیت ویرایش شد.');
+}
+
+public function DeletePricingPlan($id)
+{
+    $plan = PricingPlans::findOrFail($id);
+    $plan->delete();
+
+    return redirect()->back()->with('success', 'پلن با موفقیت حذف شد.');
+}
+
     
 
 

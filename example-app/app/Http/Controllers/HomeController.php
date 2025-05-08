@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactToUs;
+use App\Models\PricingPlans;
+use App\Models\Service;
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -10,7 +13,10 @@ class HomeController extends Controller
 {
     public function user()
     {
-        return view('index');
+        $teams= Team::all();
+        $service = Service::all();
+        $plans = PricingPlans::all();
+        return view('index', compact('service' , 'teams' , 'plans'));
     }
     public function logout(Request $request)
     {

@@ -54,8 +54,8 @@
                 </a>
                 
                 
-                <a href="{{ route('editBlog' , ['id'=>$blog->id]) }}" class="btn btn-sm btn-edit">ویرایش</a>
-                <a href="{{ route('deleteBlog',['id'=>$blog->id]) }}" class="btn btn-sm btn-delete" >حذف</a>
+                <a href="{{ route('EditBlog' , ['id'=>$blog->id]) }}" class="btn btn-sm btn-edit">ویرایش</a>
+                <a href="{{ route('DeleteBlog',['id'=>$blog->id]) }}" class="btn btn-sm btn-delete" >حذف</a>
             </div>
         </div>
         @endforeach

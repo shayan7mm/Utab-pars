@@ -45,10 +45,49 @@ Route::middleware(['auth', AdminMiddleware::class . ':admin'])
     Route::get('/admin/AdminBlog', [BlogPostController::class,'AdminBlog'])->name('AdminBlog');
     Route::get('/admin/AdminBlog/AddNewBlog', [BlogPostController::class,'AddNewBlog'])->name('AddNewBlog');
     Route::post('/admin/AdminBlogs/AddNewBlog/InsertBlog', [BlogPostController::class,'InsertBlog'])->name('InsertBlog');
-    
+    Route::get('/admin/EditBlog/{id}', [BlogPostController::class,'EditBlog'])->name('EditBlog');
+    Route::get('/admin/DeleteBlog/{id}', [BlogPostController::class,'DeleteBlog'])->name('DeleteBlog');
+    Route::get('/blog/{slug}', [BlogPostController::class, 'show'])->name('blog.show');
+    Route::post('/admin/UpdateBlog', [BlogPostController::class,'UpdateBlog'])->name('UpdateBlog');
+
+    Route::get('/admin/PricingPlan', [AdminController::class,'PricingPlan'])->name('PricingPlan');
+    Route::post('/admin/PricingPlan/InsertBusinessPlan', [AdminController::class,'InsertBusinessPlan'])->name('InsertBusinessPlan');
+    Route::get('/admin/PricingPlan/EditPricingPlan/{id}', [AdminController::class, 'EditPricingPlan'])->name('EditPricingPlan');
+    Route::post('/admin/PricingPlan/UpdatePricingPlan', [AdminController::class, 'UpdatePricingPlan'])->name('UpdatePricingPlan');
+    Route::delete('/admin/PricingPlan/Delete/{id}', [AdminController::class, 'DeletePricingPlan'])->name('DeletePricingPlan');
+
+
+
     
 
+    
+    
     Route::get('/admin/test', [AdminController::class,'test'])->name('test');
+
+
+
+
+
+
+
+
+
+    // Route::get('/admin/editBlog/{id}', [BlogPostController::class,'editBlog'])->name('editBlog')->middleware(['auth','auth.role.admin']) ;
+
+    // Route::get('/blog/{slug}', [BlogPostController::class, 'show'])->name('blog.show')->middleware(['auth','auth.role.admin']) ;
+    // Route::get('/admin/deleteBlog/{id}', [BlogPostController::class,'deleteBlog'])->name('deleteBlog')->middleware(['auth','auth.role.admin']) ;
+    // Route::post('/admin/updateBlog', [BlogPostController::class,'updateBlog'])->name('updateBlog')->middleware(['auth','auth.role.admin']) ;
+    // Route::get('/blog/tag/{tag}', [BlogPostController::class, 'filterByTag'])->name('blog.tag');
+
+
+
+
+
+
+
+
+
+    
 
 
 });
@@ -71,5 +110,11 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+
+
+// برای ck editor نسخه قدیمی تر
+route::post('/upload',[BlogPostController::class, 'upload'])->name('ckeditor.upload');
 
 

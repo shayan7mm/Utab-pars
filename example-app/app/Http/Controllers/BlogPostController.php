@@ -16,8 +16,8 @@ class BlogPostController extends Controller
 
     public function AddNewBlog()
     {
-        $post = BlogPost::all();
-        return view('AdminViews.AdminBlogs.AddNewBlog' , compact('post'));
+       
+        return view('AdminViews.AdminBlogs.AddNewBlog' );
     }
 
     
@@ -80,14 +80,14 @@ class BlogPostController extends Controller
     
 
     // نمایش فرم ویرایش پست
-    public function editBlog($id)
+    public function EditBlog($id)
     {
         $post = BlogPost::findOrFail($id);
-        return view('AdminViews.editBlog', compact('post'));
+        return view('AdminViews.AdminBlogs.EditBlog', compact('post'));
     }
 
     // بروزرسانی پست در دیتابیس
-  public function updateBlog(Request $request)
+  public function UpdateBlog(Request $request)
 {
     $request->validate([
         // 'id' => 'required|exists:blogs,id',
@@ -122,21 +122,16 @@ class BlogPostController extends Controller
 
     $post->save();
 
-    return redirect()->back()->with('success', 'پست با موفقیت ویرایش شد.');
+    return redirect()->route('AdminBlog')->with('success', 'پست با موفقیت ویرایش شد.');
 }
 
-
-    
-    
-    
-
     // حذف پست از دیتابیس
-    public function deleteBlog($id)
+    public function DeleteBlog($id)
     {
         $post = BlogPost::findOrFail($id);
         $post->delete();
 
-        return redirect()->route('blogs')->with('success', 'پست حذف شد.');
+        return redirect()->route('AdminBlog')->with('success', 'پست حذف شد.');
     }
 
     public function blogs()
@@ -149,7 +144,7 @@ class BlogPostController extends Controller
     public function show($slug)
 {
     $post = BlogPost::where('slug', $slug)->firstOrFail();
-    return view('AdminViews.singleBlogPage', compact('post'));
+    return view('AdminViews.AdminBlogs.SingleBlog', compact('post'));
 }
 
 
