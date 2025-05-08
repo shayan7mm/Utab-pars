@@ -291,7 +291,7 @@
                 <p>{{ Str::limit(strip_tags($resume->description), 50) }}</p>
                 <a href="{{ asset('uploads/resumes/' . $resume->featured_image) }}" 
                    data-gallery="portfolioGallery" 
-                   class="portfolio-lightbox preview-link" 
+                   class="portfolio-lightbox preview-link" >
                    
                   <i class="bx bx-plus"></i>
                 </a>
@@ -326,18 +326,22 @@
               <div class="pic">
                 <img src="{{ asset('storage/photos/1/' . $member->image) }}" class="img-fluid" alt="{{ $member->name }}">
               </div>
-              <div class="member-info">
-                <h4>{{ $member->name }}</h4>
-                <span>{{ $member->position }}</span>
-                <p>{{ $member->specialty }}</p>
-                <div class="social">
-                  {{-- لینک‌های شبکه‌های اجتماعی اختیاری هستند، می‌توانند از جدول جداگانه‌ای بارگذاری شوند --}}
-                  <a href="#"><i class="ri-twitter-fill"></i></a>
-                  <a href="#"><i class="ri-facebook-fill"></i></a>
-                  <a href="#"><i class="ri-instagram-fill"></i></a>
-                  <a href="#"><i class="ri-linkedin-box-fill"></i></a>
+              <div class="member-info" style="direction: rtl; text-align: right; font-size: 15px; line-height: 2;">
+                <p><strong>نام:</strong> {{ $member->name }}</p>
+                <p><strong>سمت:</strong> {{ $member->position }}</p>
+                <p>
+                    <strong style="margin-right: 5px;">توضیحات:</strong>{!! $member->description !!}
+                </p>
+                <p><strong>تخصص:</strong> {{ $member->specialty }}</p>
+            
+                <div class="social mt-2">
+                    <a href="#"><i class="ri-twitter-fill"></i></a>
+                    <a href="#"><i class="ri-facebook-fill"></i></a>
+                    <a href="#"><i class="ri-instagram-fill"></i></a>
+                    <a href="#"><i class="ri-linkedin-box-fill"></i></a>
                 </div>
-              </div>
+            </div>
+            
             </div>
           </div>
           @endforeach
