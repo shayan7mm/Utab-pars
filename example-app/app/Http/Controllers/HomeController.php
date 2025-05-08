@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactToUs;
 use App\Models\PricingPlans;
+use App\Models\Resume;
+use App\Models\ResumeImage;
 use App\Models\Service;
 use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +18,8 @@ class HomeController extends Controller
         $teams= Team::all();
         $service = Service::all();
         $plans = PricingPlans::all();
-        return view('index', compact('service' , 'teams' , 'plans'));
+        $resumes = Resume::all();
+        return view('index', compact('service' , 'teams' , 'plans', 'resumes'));
     }
     public function logout(Request $request)
     {
@@ -52,5 +55,19 @@ class HomeController extends Controller
         $ContacToUs->save();
         return redirect()->route('user')->with('success' , 'پیام شما با موفقیت ارسال شد');
     }
+}
+
+public function OurProjects()
+{
+    $resumes = Resume::all();
+    
+    return view('UserViews.OurProjects' , compact('resumes'));
+}
+
+public function show($id)
+{
+    $resume = Resume::with('images')->findOrFail($id);
+    
+    return view('UserViews.show', compact('resume'));
 }
 }

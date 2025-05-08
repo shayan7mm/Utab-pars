@@ -3,10 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    
-   
-
     <!-- Favicons -->
     <link href="{{ asset('img/favicon.png') }}" rel="icon">
     <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
@@ -25,6 +21,11 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- Glightbox CSS -->
+<link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+<!-- Glightbox JS -->
+<script src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
+
 </head>
 <body>
 
@@ -46,5 +47,11 @@
  
  <!-- Template Main JS File -->
  <script src="{{ asset('js/main.js') }}"></script>
+ <script>
+    const lightbox = GLightbox({
+        selector: '.glightbox'
+    });
+</script>
+
 </body>
 </html>

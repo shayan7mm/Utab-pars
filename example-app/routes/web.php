@@ -21,6 +21,10 @@ Route::get('/logout', [HomeController::class,'logout'])->name('logout');
 
 Route::post('/ContactToUs', [HomeController::class,'ContactToUs'])->name('ContactToUs');
 
+Route::get('/OurProjects', [HomeController::class,'OurProjects'])->name('OurProjects');
+
+Route::get('/projects/{id}', [HomeController::class, 'show'])->name('resumes.show');
+
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
@@ -68,6 +72,8 @@ Route::delete('/admin/resumes/gallery/{imageId}', [ResumeController::class, 'del
 // در فایل web.php
 
 Route::get('/admin/resumes/{id}/gallery', [ResumeController::class, 'gallery'])->name('resumes.gallery');
+Route::post('/resumes/{id}/add-gallery-image', [ResumeController::class, 'addGalleryImage'])->name('resumes.addGalleryImage');
+
 
 
 
