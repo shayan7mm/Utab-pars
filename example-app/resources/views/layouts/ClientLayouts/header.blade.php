@@ -12,7 +12,7 @@
           <li><a class="nav-link scrollto" href="#services">خدمات</a></li>
           <li><a class="nav-link scrollto" href="#portfolio">نمونه کارها</a></li>
           <li><a class="nav-link scrollto" href="#team">تیم ما</a></li>
-          <li><a class="nav-link scrollto" href="#blog">وبلاگ</a></li>
+          <li><a class="nav-link scrollto" href="{{ route('Blog') }}">وبلاگ</a></li>
           <li><a class="nav-link scrollto" href="#contact">ارتباط باما</a></li>
           <li><a class="getstarted scrollto" href="#about">همکاری</a></li>
         </ul>

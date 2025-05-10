@@ -25,6 +25,12 @@ Route::get('/OurProjects', [HomeController::class,'OurProjects'])->name('OurProj
 
 Route::get('/projects/{id}', [HomeController::class, 'show'])->name('resumes.show');
 
+Route::get('/Blog', [HomeController::class,'Blog'])->name('Blog');
+
+Route::get('/Blog/BlogDetail/{slug}', [HomeController::class, 'BlogDetail'])->name('BlogDetail');
+
+Route::get('/Blog/tag/{tag}', [BlogPostController::class, 'filterByTag'])->name('blog.tag');
+
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
@@ -40,12 +46,17 @@ Route::middleware(['auth', AdminMiddleware::class . ':admin'])
     Route::get('/admin/AddTeamMember', [AdminController::class,'AddTeamMember'])->name('AddTeamMember');
     Route::post('/admin/AddTeamMember/InsertTeamMember', [AdminController::class,'InsertTeamMember'])->name('InsertTeamMember');
     Route::get('/admin/DeleteTeamMember/{id}', [AdminController::class,'DeleteTeamMember'])->name('DeleteTeamMember');
+    Route::get('/admin/EditTeamMember/{id}', [AdminController::class,'EditTeamMember'])->name('EditTeamMember');
+    Route::put('/admin/UpdateTeamMember/{id}', [AdminController::class, 'UpdateTeamMember'])->name('UpdateTeamMember');
 
     Route::get('/admin/AllMessages', [AdminController::class,'AllMessages'])->name('AllMessages');
+    Route::get('/admin/DeleteMessage/{id}', [AdminController::class,'DeleteMessage'])->name('DeleteMessage');
 
     Route::get('/admin/AllServices', [AdminController::class,'AllServices'])->name('AllServices');
     Route::post('/admin/AllServices/InsertService', [AdminController::class,'InsertService'])->name('InsertService');
     Route::get('/admin/DeleteService/{id}', [AdminController::class,'DeleteService'])->name('DeleteService');
+    Route::get('/admin/EditServices/{id}', [AdminController::class, 'EditService'])->name('EditService');
+    Route::post('/admin/UpdateServices{id}', [AdminController::class, 'UpdateService'])->name('UpdateService');
 
     Route::get('/admin/AdminBlog', [BlogPostController::class,'AdminBlog'])->name('AdminBlog');
     Route::get('/admin/AdminBlog/AddNewBlog', [BlogPostController::class,'AddNewBlog'])->name('AddNewBlog');

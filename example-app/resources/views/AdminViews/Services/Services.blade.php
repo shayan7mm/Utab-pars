@@ -54,6 +54,7 @@
                                                     </svg>
                                                 </a>
                                                 </td>
+                                                <td><a class="btn btn-primary" href="{{ route('EditService' , ['id' =>$item->id]) }}">ویرایش</a></td>
                                             </tr>
                                             @endforeach
                                             

@@ -111,7 +111,8 @@
                     </td>
                     <td>{!! Str::limit($team->description, 100) !!}</td>
 
-                     <td><a href="{{ route('DeleteTeamMember' , ['id' => $team->id]) }}">حذف</a></td>
+                     <td><a class="btn btn-danger" href="{{ route('DeleteTeamMember' , ['id' => $team->id]) }}">حذف</a></td>
+                     <td><a class="btn btn-primary" href="{{ route('EditTeamMember' , ['id' => $team->id]) }}">ویرایش</a></td>
                     
                 </tr>
                 

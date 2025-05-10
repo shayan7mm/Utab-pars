@@ -7,6 +7,7 @@ use App\Models\PricingPlans;
 use App\Models\Resume;
 use App\Models\Service;
 use App\Models\Team;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -48,6 +49,37 @@ public function InsertTeamMember(Request $request)
     return redirect()->route('AddTeamMember')->with('success', 'عضو تیم با موفقیت اضافه شد.');
 }
 
+public function EditTeamMember($id)
+{
+    $team = Team::findOrFail($id);
+    return view('AdminViews.Team.EditTeamMember' , compact('team'));
+}
+
+public function UpdateTeamMember(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required',
+        'position' => 'required',
+        'specialty' => 'nullable|string',
+        'image' => 'nullable|string',
+        'description' => 'nullable|string',
+    ]);
+
+    $team = Team::findOrFail($id);
+
+    $imageName = basename($request->image);
+
+    $team->update([
+        'name' => $request->name,
+        'position' => $request->position,
+        'specialty' => $request->specialty,
+        'image' => $imageName,
+        'description' => $request->description,
+    ]);
+
+    return redirect()->route('AddTeamMember')->with('success', 'عضو تیم با موفقیت بروزرسانی شد.');
+}
+
 public function DeleteTeamMember($id)
 {
     $team = Team::findOrFail($id);
@@ -60,6 +92,14 @@ public function AllMessages()
 {
     $message = contactToUs::all();
     return view('AdminViews.Message.Message' , compact('message'));
+}
+
+public function DeleteMessage($id)
+{
+    $contactToUs = contactToUs::findOrFail($id);
+    $contactToUs->delete();
+
+    return redirect()->back()->with('success', 'پست حذف شد.');
 }
 
     public function AllServices()
@@ -95,6 +135,38 @@ public function AllMessages()
     
         return redirect()->back()->with('success', 'خدمت با موفقیت ذخیره شد.');
     }
+
+    public function EditService($id)
+    {
+        $service = Service::findOrFail($id);
+        return view('AdminViews.Services.EditServices', compact('service'));
+    }
+
+    public function UpdateService(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'alt' => 'nullable|string|max:255',
+        'description' => 'nullable|string',
+        'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+    ]);
+
+    $service = Service::findOrFail($id);
+    $service->name = $request->name;
+    $service->alt = $request->alt;
+    $service->description = $request->description;
+
+    if ($request->hasFile('featured_image')) {
+        $imageName = time() . '-' . $request->file('featured_image')->getClientOriginalName();
+        $request->file('featured_image')->move(public_path('img/services'), $imageName);
+        $service->featured_image = $imageName;
+    }
+
+    $service->save();
+
+    return redirect()->route('AllServices')->with('success', 'خدمت با موفقیت ویرایش شد.');
+}
+
 
     public function DeleteService($id)
     {
@@ -179,6 +251,8 @@ public function projects()
     $resumes = Resume::all();
     return view('AdminViews.Projects.Projects' , compact('resumes'));
 }
+
+
 
     
 

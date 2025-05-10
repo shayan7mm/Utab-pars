@@ -197,7 +197,7 @@
             <div class="icon-box">
               <div class="icon"><i class="bx bx-code-alt"></i></div>
               @foreach($service as $services)
-              @if($services->id == 15)
+              @if($services->id == 1)
               <h4><a href="#">{{ $services->name }}</a></h4>
               <p>{{ $services->description }}</p>
               @endif
@@ -208,7 +208,7 @@
             <div class="icon-box">
               <div class="icon"><i class="bx bx-bar-chart-alt"></i></div>
               @foreach($service as $services)
-              @if($services->id == 16)
+              @if($services->id == 2)
               <h4><a href="#">{{ $services->name }}</a></h4>
               <p>{{ $services->description }}</p>
               @endif
@@ -220,7 +220,7 @@
             <div class="icon-box">
               <div class="icon"><i class="bx bx-bullseye"></i></div>
               @foreach($service as $services)
-              @if($services->id == 17)
+              @if($services->id == 3)
               <h4><a href="#">{{ $services->name }}</a></h4>
               <p>{{ $services->description }}</p>
               @endif
@@ -232,7 +232,7 @@
             <div class="icon-box">
               <div class="icon"><i class="bx bx-palette"></i></div>
               @foreach($service as $services)
-              @if($services->id == 18)
+              @if($services->id == 4)
               <h4><a href="#">{{ $services->name }}</a></h4>
               <p>{{ $services->description }}</p>
               @endif
@@ -370,7 +370,7 @@
                   <li> {{ $feature }}</li>
                 @endforeach
               </ul>
-              <a href="#" class="buy-btn">شروع کنید</a>
+              <a href="#contact" class="buy-btn">شروع کنید</a>
             </div>
           </div>
           @endforeach
@@ -498,7 +498,7 @@
           </div>
     
           <div class="col-lg-7 d-flex align-items-stretch">
-            <form action="{{ route('ContactToUs') }}" method="post" role="form" class="php-email-form p-4 rounded shadow bg-white w-100">
+            <form action="{{ route('ContactToUs') }}" method="post" class="p-4 rounded shadow bg-white w-100">
               @csrf
               <div class="row">
                 <div class="form-group col-md-6 mb-3">

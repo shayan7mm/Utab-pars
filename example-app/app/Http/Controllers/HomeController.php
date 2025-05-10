@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogPost;
 use App\Models\ContactToUs;
 use App\Models\PricingPlans;
 use App\Models\Resume;
@@ -70,4 +71,44 @@ public function show($id)
     
     return view('UserViews.show', compact('resume'));
 }
+
+public function Blog()
+{
+    $post = BlogPost::all();
+    return view('UserViews.Blog' , compact('post'));
+}
+
+ public function BlogDetail($slug)
+    {
+        $lastPost = BlogPost::latest()->take(3)->get();
+        $post = BlogPost::where('slug', $slug)->firstOrFail();
+    
+        // گرفتن پست‌های قبلی و بعدی
+        $previous = BlogPost::where('id', '<', $post->id)->orderBy('id', 'desc')->first();
+        if (!$previous) {
+            $previous = BlogPost::orderBy('id', 'desc')->first();
+        }
+    
+        $next = BlogPost::where('id', '>', $post->id)->orderBy('id')->first();
+        if (!$next) {
+            $next = BlogPost::orderBy('id')->first();
+        }
+    
+        return view('UserViews.BlogDetail', compact('post', 'lastPost', 'previous', 'next'));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -151,7 +151,7 @@ class BlogPostController extends Controller
 public function filterByTag($tag)
 {
     $posts = BlogPost::where('tags', 'like', "%$tag%")->get();
-    return view('CustomersViews.blogList', compact('posts', 'tag'));
+    return view('UserViews.BlogList', compact('posts', 'tag'));
 }
 
 
